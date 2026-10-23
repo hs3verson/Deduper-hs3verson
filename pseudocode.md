@@ -2,7 +2,7 @@
 
 ## Problem
 
-PCR amplification during library prep creates multiple copies of the same original segment. If more than one copy gets sequenced, that segments abundance will appear incorrectly high, impacting expression analysis down the line. 
+PCR amplification during library prep creates multiple copies of the same original segment of DNA/RNA. If more than one copy gets sequenced, that segments abundance will appear incorrectly high, impacting expression analysis down the line. 
 
 Goal: given a SAM file of uniquely mapped single-end reads, write a new SAM file that keeps only one copy of each PCR duplicate. Reads with UMIs not in the known list of 96 UMIs are thrown out. 
 
@@ -64,7 +64,7 @@ for each line in input file:
                 current_chrom = chrom (set current_chrom to be the new one)
 
             strand = get_strand(flag) --- see function below
-            start = get_5prime_start(pos, cigar, strand) --- see function below
+            start = get_five_prime_start(pos, cigar, strand) --- see function below
             read_id = (umi, strand, start), tuple
 
             if read_id in seen:
@@ -90,7 +90,7 @@ def get_strand(flag):
 Examples: 0 -> "+", 16 -> "-"
 
 ```
-def get_5prime_start(pos, cigar, strand):
+def get_five_prime_start(pos, cigar, strand):
     '''Returns the 5' start position of the read, adjusted for soft clipping'''
     return start
 ```
