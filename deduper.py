@@ -87,6 +87,7 @@ with open(args.file, "r") as ifh, open(args.outfile, "w") as ofh:
     header_lines = 0
     unique_reads = 0
     wrong_umis = 0
+    duplicates_removed = 0
     current_chrom = None
     seen = set()
 
@@ -127,6 +128,7 @@ with open(args.file, "r") as ifh, open(args.outfile, "w") as ofh:
                 read_id = (umi, strand, start)
                 # If tuple has been seen -> duplicate -> skip
                 if read_id in seen:
+                    duplicates_removed += 1
                     continue
                 # If tuple has not been seen -> add to set -> write full read to output, add one to unique reads counter
                 else:
@@ -134,8 +136,7 @@ with open(args.file, "r") as ifh, open(args.outfile, "w") as ofh:
                     ofh.write(f"{line}")
                     unique_reads += 1
                     
-print(f"# of Header Lines = {header_lines}\n# of Unique Reads = {unique_reads}\n# of Wrong UMIs = {wrong_umis}")
-
+print(f"# of Header Lines = {header_lines}\n# of Unique Reads = {unique_reads}\n# of Wrong UMIs = {wrong_umis}\n# of Duplicates Removed = {duplicates_removed}")
 
 
 
